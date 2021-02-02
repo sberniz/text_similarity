@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from functions import similarity
+from app.functions import similarity
 from pydantic import BaseModel,Field,validator
 app = FastAPI(title="Similarity Comparison",
 description="Compares between different Text",
@@ -15,6 +15,15 @@ class Texts(BaseModel):
     text2: str = Field(...,example='Hello everyone')
 @app.post('/compare')
 def compare(texts: Texts):
+    """ ### USAGE: 
+         - /compare 
+         - POST request with body of two strings (text1,text2)
+         - Return json object with similarity: value 
+        ### Try it directly here
+         - Click 'Try it out'
+         - replace the sample stringss. 
+         - click execute 
+         """
     similar = similarity(texts.text1,texts.text2)
 
     return {
